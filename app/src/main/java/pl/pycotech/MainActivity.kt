@@ -25,28 +25,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        result = findViewById(R.id.result)
-//        newNumber = findViewById(R.id.newNumber)
-//
-//        //Data input buttons
-//        val button0: Button = findViewById(R.id.button0)
-//        val button1: Button = findViewById(R.id.button1)
-//        val button2: Button = findViewById(R.id.button2)
-//        val button3: Button = findViewById(R.id.button3)
-//        val button4: Button = findViewById(R.id.button4)
-//        val button5: Button = findViewById(R.id.button5)
-//        val button6: Button = findViewById(R.id.button6)
-//        val button7: Button = findViewById(R.id.button7)
-//        val button8: Button = findViewById(R.id.button8)
-//        val button9 = findViewById<Button>(R.id.button9)
-//
-//        //Operation buttons
-//        val buttonDivide = findViewById<Button>(R.id.buttonDivide)
-//        val buttonMultiply = findViewById<Button>(R.id.buttonMultiply)
-//        val buttonMinus = findViewById<Button>(R.id.buttonMinus)
-//        val buttonPlus = findViewById<Button>(R.id.buttonPlus)
-//        val buttonDot = findViewById<Button>(R.id.buttonDot)
-//        val buttonEquals = findViewById<Button>(R.id.buttonEquals)
+/*        result = findViewById(R.id.result)
+        newNumber = findViewById(R.id.newNumber)
+
+        //Data input buttons
+        val button0: Button = findViewById(R.id.button0)
+        val button1: Button = findViewById(R.id.button1)
+        val button2: Button = findViewById(R.id.button2)
+        val button3: Button = findViewById(R.id.button3)
+        val button4: Button = findViewById(R.id.button4)
+        val button5: Button = findViewById(R.id.button5)
+        val button6: Button = findViewById(R.id.button6)
+        val button7: Button = findViewById(R.id.button7)
+        val button8: Button = findViewById(R.id.button8)
+        val button9 = findViewById<Button>(R.id.button9)
+
+        //Operation buttons
+        val buttonDivide = findViewById<Button>(R.id.buttonDivide)
+        val buttonMultiply = findViewById<Button>(R.id.buttonMultiply)
+        val buttonMinus = findViewById<Button>(R.id.buttonMinus)
+        val buttonPlus = findViewById<Button>(R.id.buttonPlus)
+        val buttonDot = findViewById<Button>(R.id.buttonDot)
+        val buttonEquals = findViewById<Button>(R.id.buttonEquals)*/
 
         val listener = View.OnClickListener { v ->
             newNumber.append((v as Button).text)
@@ -79,6 +79,25 @@ class MainActivity : AppCompatActivity() {
         for (b in operatorButtonsArray) {
             b.setOnClickListener(opListener)
         }
+
+        buttonNeg.setOnClickListener {
+            val value = newNumber.text.toString()
+            if (value.isEmpty()) {
+                newNumber.setText("-")
+            } else {
+                try {
+                    var doubleValue = value.toDouble()
+                    doubleValue *= -1
+                    newNumber.setText(doubleValue.toString())
+
+                } catch (e: java.lang.NumberFormatException){
+                    //newNumber was "-" or ".", so clear it
+                    newNumber.setText("")
+                }
+            }
+        }
+
+        //TODO add clear operation button
     }
 
     private fun performOperation(value: Double, operation: String) {
